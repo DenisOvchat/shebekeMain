@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionCell" id="yiA-WR-yGp" customClass="FiveFriendsCollectionCell" customModule="AZ_Social" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="231" height="199"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="231" height="199"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcW-DU-75H">
+                        <rect key="frame" x="59" y="128" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t6y-Ly-3PQ" customClass="AvatarImage" customModule="AZ_Social" customModuleProvider="target">
+                        <rect key="frame" x="30" y="19" width="150" height="75"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="K0l-4V-5vJ"/>
+                            <constraint firstAttribute="width" constant="50" id="lYF-Kj-bWJ"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="t6y-Ly-3PQ" firstAttribute="leading" secondItem="yiA-WR-yGp" secondAttribute="leading" constant="12" id="085-C4-Y8G"/>
+                <constraint firstItem="tcW-DU-75H" firstAttribute="leading" secondItem="yiA-WR-yGp" secondAttribute="leading" id="6hK-Nq-eGR"/>
+                <constraint firstItem="t6y-Ly-3PQ" firstAttribute="top" secondItem="yiA-WR-yGp" secondAttribute="topMargin" constant="10" id="A2T-M6-v3d"/>
+                <constraint firstItem="tcW-DU-75H" firstAttribute="top" secondItem="t6y-Ly-3PQ" secondAttribute="bottom" constant="5" id="OnF-K7-f7f"/>
+                <constraint firstAttribute="trailing" secondItem="tcW-DU-75H" secondAttribute="trailing" id="pmI-qX-Tsh"/>
+            </constraints>
+            <size key="customSize" width="231" height="199"/>
+            <connections>
+                <outlet property="avat" destination="t6y-Ly-3PQ" id="jxQ-fQ-BB0"/>
+                <outlet property="name" destination="tcW-DU-75H" id="VEh-eK-YNg"/>
+            </connections>
+            <point key="canvasLocation" x="-55" y="541"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,0 +1,40 @@
+PODS:
+  - BSGridCollectionViewLayout (1.2.0)
+  - BSImagePicker (2.6.0):
+    - BSGridCollectionViewLayout (~> 1.2.0)
+    - UIImageViewModeScaleAspect (= 1.5)
+  - RGPageViewController (1.0.0)
+  - Socket.IO-Client-Swift (8.2.0)
+  - SwipeViewController (0.1.8)
+  - TRMosaicLayout (1.0.0)
+  - UIImageViewModeScaleAspect (1.5)
+
+DEPENDENCIES:
+  - BSImagePicker (~> 2.4)
+  - RGPageViewController (from `https://github.com/eRGoon/RGPageViewController.git`, tag `1.0.0`)
+  - Socket.IO-Client-Swift
+  - SwipeViewController
+  - TRMosaicLayout
+
+EXTERNAL SOURCES:
+  RGPageViewController:
+    :git: https://github.com/eRGoon/RGPageViewController.git
+    :tag: 1.0.0
+
+CHECKOUT OPTIONS:
+  RGPageViewController:
+    :git: https://github.com/eRGoon/RGPageViewController.git
+    :tag: 1.0.0
+
+SPEC CHECKSUMS:
+  BSGridCollectionViewLayout: 8f12c8e1e08c47057f5a39a6828f4395f043d78f
+  BSImagePicker: 7b740d0a9f23160bcdca01f179445583bd1c09b0
+  RGPageViewController: f580a88305f056134e1d3fa3a71431e5ca9e14c8
+  Socket.IO-Client-Swift: 900cf511777045c80d1ce1f11f71261e87765dd1
+  SwipeViewController: 0e396aa7d7756c30f8914ef59aea2a3d7d7798bc
+  TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
+  UIImageViewModeScaleAspect: 11a790a0b9d248a13dc63e3a78991f1463b6d84e
+
+PODFILE CHECKSUM: 5dcded5a0979c4f6aead352a488f67f7633e112a
+
+COCOAPODS: 1.0.1

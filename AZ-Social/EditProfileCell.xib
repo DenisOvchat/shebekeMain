@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="114" id="KGk-i7-Jjw" customClass="EditProfileCell" customModule="AZ_Social" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="254" height="114"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="254" height="114"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yBg-4b-SOd" customClass="containerViewForEditing" customModule="AZ_Social" customModuleProvider="target">
+                        <rect key="frame" x="14" y="13" width="223" height="88"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="CoY-IK-Qqx"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="yBg-4b-SOd" secondAttribute="bottom" id="XIc-CL-ML7"/>
+                    <constraint firstAttribute="trailing" secondItem="yBg-4b-SOd" secondAttribute="trailing" constant="15" id="dWO-Cj-IFX"/>
+                    <constraint firstItem="yBg-4b-SOd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="qej-UK-VpM"/>
+                    <constraint firstItem="yBg-4b-SOd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="x5Z-Lj-52U"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contHeightConstraint" destination="CoY-IK-Qqx" id="HNA-ct-kIv"/>
+                <outlet property="containerView" destination="yBg-4b-SOd" id="qNL-4V-msK"/>
+            </connections>
+            <point key="canvasLocation" x="37" y="130"/>
+        </tableViewCell>
+    </objects>
+</document>
