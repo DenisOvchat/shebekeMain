@@ -14,10 +14,9 @@ import TRMosaicLayout
 import UIKit
 protocol PostEditDelegate
 {
-    var profile:FullProfile! {get set}
     func menuShow(cell:postCell)
-    func reloadPost(post:WallPost,cell:postCell)
 }
+
 class postCell:UITableViewCell,UICollectionViewDelegate,UICollectionViewDataSource
 {
     

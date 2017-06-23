@@ -109,7 +109,7 @@ class LentaVC:UIViewController,UITableViewDataSource,UITableViewDelegate,LoaderD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        if (indexPath.section ==  postsStorage.count-10) {
+        if (indexPath.row ==  postsStorage.count-10) {
             print("schould load more")
             postsLoader.loadMoreToTheEnd(count: 10)
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WallPost:Entity
+class WallPost:NSObject
 {
     private var dictionary = NSDictionary()
     var id:Int?
@@ -21,7 +21,7 @@ class WallPost:Entity
         }
         
     }
-    var _sender:Person?
+    private var _sender:Person?
     var sender:Person?
     {
         get

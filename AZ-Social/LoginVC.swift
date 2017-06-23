@@ -44,7 +44,7 @@ class LoginVC:UIViewController
                     
                     if httpResponse.statusCode == 200
                     {
-                        self.didLogin(data: data)
+                        didLogin(data: data)
                         
                         
                     }
@@ -90,7 +90,7 @@ class LoginVC:UIViewController
                 
                 if httpResponse.statusCode == 202
                 {
-                    self.didLogin(data: data)
+                    didLogin(data: data)
                     
                     let url = NSURL(string: ServerManager.shared(named: "main")!.getDomain())
                     
@@ -123,56 +123,7 @@ class LoginVC:UIViewController
         
     }
     
-    func didLogin(data:Data?)
-    {
     
-           
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "TBC")
-       
-        
-                    //self.appDelegate.window?.makeKeyAndVisible()
-                    
-                    
-                    //self.appDelegate.data.myProfile = p
-                    
-        
-                    var error: NSError?
-                    do{
-                        if let JSONData = data { // Check 1.
-                            if let dict = try JSONSerialization.jsonObject(with: JSONData, options: []) as? NSDictionary { // Check 2. and 3.
-                                print("Dictionary received")
-                                
-                                self.data.myProfile = FullProfile(with: dict)
-
-                                
-                                
-                            }
-                            else {
-                                
-                                if let jsonString = NSString(data: JSONData, encoding: String.Encoding.utf8.rawValue) {
-                                    
-                                    
-                                    
-                                    
-                                    print("JSON: \n\n \(jsonString)")
-                                }
-                                fatalError("Can't parse JSON \(error)")
-                            }
-                        }
-                        else {
-                            fatalError("JSONData is nil")
-                        }
-                    }catch{}
-                    
-                    
-        DispatchQueue.main.async {
-            self.appDelegate.window?.rootViewController = initialViewController
-
-        }
-                    
-    }
                
     
             
@@ -182,5 +133,55 @@ class LoginVC:UIViewController
     
 
     
+    
+}
+func didLogin(data:Data?)
+{
+    
+    
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    
+    let initialViewController = storyboard.instantiateViewController(withIdentifier: "TBC")
+    
+    
+    //self.appDelegate.window?.makeKeyAndVisible()
+    
+    
+    //self.appDelegate.data.myProfile = p
+    
+    
+    var error: NSError?
+    do{
+        if let JSONData = data { // Check 1.
+            if let dict = try JSONSerialization.jsonObject(with: JSONData, options: []) as? NSDictionary { // Check 2. and 3.
+                print("Dictionary received")
+                
+                (UIApplication.shared.delegate as! AppDelegate).data.myProfile = FullProfile(with: dict)
+                
+                
+                
+            }
+            else {
+                
+                if let jsonString = NSString(data: JSONData, encoding: String.Encoding.utf8.rawValue) {
+                    
+                    
+                    
+                    
+                    print("JSON: \n\n \(jsonString)")
+                }
+                print("Can't parse JSON \(error)")
+            }
+        }
+        else {
+            print("JSONData is nil")
+        }
+    }catch{}
+    
+    
+    DispatchQueue.main.async {
+        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = initialViewController
+        
+    }
     
 }

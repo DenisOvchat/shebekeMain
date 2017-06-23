@@ -32,7 +32,7 @@ class FromInputVC:UIViewController
                 
                 if httpResponse.statusCode == 201
                 {
-                    //self.didLogin(data: data)
+                    didLogin(data: data)
                     
                     let url = NSURL(string: ServerManager.shared(named: "main")!.getDomain())
                     
@@ -61,7 +61,7 @@ class FromInputVC:UIViewController
                 
             }
             
-        })
+        },withCookies: true, with:"PUT")
 
         
        // (segue.destination as! PhotoInputVC).rigistrationData = rigistrationData

@@ -8,12 +8,14 @@
 
 import Foundation
 import UIKit
-class DialogsVC:UIViewController,UITableViewDelegate,UITableViewDataSource
+class DialogsVC:UIViewController,UITableViewDelegate,UITableViewDataSource,SocketMessageDelegate
 {
     var data = (UIApplication.shared.delegate as! AppDelegate).data
     @IBOutlet weak var tableView: UITableView!
     var dialogs = dialogues()
-    override func loadView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
        // let b = storyboard?.instantiateViewController(withIdentifier: "fr2")
        // show(b!, sender: nil)
         for i in 0...10
@@ -36,7 +38,6 @@ class DialogsVC:UIViewController,UITableViewDelegate,UITableViewDataSource
             }
         }
         
-        super.loadView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 80
@@ -69,6 +70,7 @@ class DialogsVC:UIViewController,UITableViewDelegate,UITableViewDataSource
             dist.user = dialogs.array[(tableView.indexPathForSelectedRow?.row)!]
         }
     }
-    
+    func gotMessage(dataArray: [Any]) {
+    }
     
 }

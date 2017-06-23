@@ -11,12 +11,17 @@ import UIKit
 class WallPostLoaderFromServerByProfile:Loader
 {
     var id:Int!
-    
+    var profile: FullProfile!
+    var postsStorage = WallPostStorage()
+
     var serverManager:ServerManager!
     init(named:String,with serverManager:ServerManager,qos:DispatchQoS,id:Int) {
         super.init(named: named,qos:qos)
         self.serverManager = serverManager
         self.id = id
+        
+        postsStorage.assignLoader(named: "postsFromServer", loader: self)
+
     }
     
     func load(count:Int)
@@ -29,7 +34,7 @@ class WallPostLoaderFromServerByProfile:Loader
             {
                 if (UIApplication.shared.delegate as! AppDelegate).data.myProfile != nil
                 {
-                    self.id = (UIApplication.shared.delegate as! AppDelegate).data.myProfile?.id
+                    self.id = (UIApplication.shared.delegate as! AppDelegate).getMyId()
                 }
                 else
                 {
@@ -95,6 +100,54 @@ class WallPostLoaderFromServerByProfile:Loader
         
  
     }
+    
+    func deletePost(cell:UITableViewCell)
+    {
+        queue?.sync {
+            if let post = (cell as? postCell)?.post
+            {
+                let data = ["id":post.id]
+                
+                ServerManager.shared(named: "main")?.POSTJSONRequestByAdding(postfix: "/blogs/posts", data: data, complititionHandler:  { (data:Data?, response:URLResponse?, error:Error?) in
+                    
+                    
+                    
+                    if let httpResponse = response as? HTTPURLResponse, let fields = httpResponse.allHeaderFields as? [String : String] {
+                        
+                        if httpResponse.statusCode == 201
+                        {
+                            //self.delegate?.deletePost(cell: self)
+                            if let index = self.postsStorage.Indexof(object: post)
+                            {
+                                self.postsStorage.deleteElementsAt(indexes: [index])
+
+                            }
+                            
+                            
+                            
+                            DispatchQueue.main.async
+                            {
+                                    [cell ,unowned self]
+                                    in
+                                    self.delegate.didDeleteEntities(views: [cell])
+                                    
+                            }
+                        }
+                        else
+                        {
+                            print("did not deletePost")
+                        }
+                        
+                        
+                    }
+                    
+                },withCookies: true,with:"DELETE")
+            }
+
+            }
+            
+    }
+    
     func loadMoreToTheEnd(count:Int)
     {
         delegate?.didLoadEntitiesToTheEnd(Amount: UInt(count))
@@ -181,16 +234,11 @@ class WallPostLoaderFromServerLenta:Loader
     }
     func loadMoreToTheEnd(count:Int)
     {
-        delegate?.didLoadEntitiesToTheEnd(Amount: UInt(count))
+      //  delegate?.didLoadEntitiesToTheEnd(Amount: UInt(count))
     }
     
 }
 
 
-class WallPostLoaderFromDatabase:Loader
-{
-    func loadMore(count:Int) {
-        
-    }
-}
+
 

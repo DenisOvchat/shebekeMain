@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         
-        
+        ShebekeSocketManager.sharedInstance.establishConnection()
+
         
         ServerManager.addServerManager(named:"main",domain:"http://188.225.38.189")
         
@@ -67,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
@@ -80,11 +82,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
      //   loadHTTPCookies()
+        ShebekeSocketManager.sharedInstance.closeConnection()
 
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+
+        ShebekeSocketManager.sharedInstance.establishConnection()
+
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
@@ -185,6 +191,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(cookieArray, forKey: "cookieArray")
     }
     
+    func getMyId() -> Int?
+    {
+        return  data.myProfile?.id
+        
+    }
     
 }
 
@@ -217,53 +228,128 @@ func addFriend(id:Int)
     
 }
 
-protocol socketMessageDelegate
+protocol SocketMessageDelegate:NSObjectProtocol
 {
-    var delegateId:Int{get set}
+    func gotMessage(dataArray:[Any])
+
 }
 
 
-class ShebekeSocketManager
-{
-    static var delegates : [String:[Int:socketMessageDelegate]] = [String:[Int:socketMessageDelegate]]()
-    
-    
-    
-    let socket = SocketIOClient(socketURL: URL(string: "http://188.225.38.189/im")!, config: [.log(true), .forcePolling(true)])
+
+
+protocol SocketProtocol {
     func set()
+}
+
+
+class SocketManager:SocketProtocol
+{
+    
+    var delegates : [String:Set<NSObject>] = [String:Set<NSObject>]()
+        //= [String:[Int:socketMessageDelegate]]()
+    static let sharedInstance = SocketManager()
+    
+    
+    let socket = SocketIOClient(socketURL: URL(string: "http://188.225.38.189/im")!, config: [.log(false), .forcePolling(true)])
+    
+    func foo(_ dataSource: UITableViewDataSource) {
+    }
+    init()
     {
         
-        socket.on("connect") {data, ack in
-            print("socket connected")
-            let hejka = [""] // тут параметр (если есть)
-            let paginav = [""] // тут параметр 2 (если есть)
+    }
+    init(categories:[String]) {
+        for category in categories
+        {
+            delegates[category] = Set<NSObject>()
+        }
+    }
+    
+    
+    func addDelegate(delegate:SocketMessageDelegate, category:String)->Bool
+    {
+        
+        var dels =  self.delegates[category]
+        if dels != nil
+        {
             
-            let p = self.socket.emitWithAck("")
-            {data in
+            dels?.insert(delegate as! NSObject)
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+    func removeDelegate(delegate:SocketMessageDelegate, category:String)
+    {
+        var dels =  self.delegates[category]
+        if dels != nil
+        {
+            dels?.remove(delegate as! NSObject)
+        }
+        else
+        {
+            return
+        }
+    }
+    
+    
+    func set()
+    {
+        fatalError("Must Override")
+
+    }
+    
+    
+    func establishConnection() {
+        socket.connect()
+    }
+    
+    
+    func closeConnection() {
+        socket.disconnect()
+    }
+    
+    
+
+}
+
+class ShebekeSocketManager:SocketManager
+{
+    
+   override func set()
+    {
+        
+        self.socket.on("currentAmount") {data, ack in
+            if let cur = data[0] as? Double {
+                self.socket.emitWithAck("canUpdate", cur).timingOut(after: 0) {data in
+                    self.socket.emit("update", ["amount": cur + 2.50])
+                }
                 
+                ack.with("Got your currentAmount", "dude")
             }
-                socket.emitWithAck("ВАШЕ_СОБЫТИЕ", "", hejka, paginav)(timeoutAfter: 0) // указываем событие которое генерируем
-            {data in
+        }
+        
+        socket.on("gotMessage") { ( dataArray, ack) -> Void in
+            if let neededDelegates = self.delegates["gotMessage"]
+            {
                 
-                let dataTickets = data[1]["result"] as! NSArray // парсим json который пришел
-                let howMuchTickets = dataTickets.valueForKey("name")
-                
-                
-                for (var i=0; i < howMuchTickets.count; i++){
-                    let ticketName = dataTickets[i].valueForKey("name") as? String
-                    self.arrayOfTickets.append(ticketName!) // заполняем массив тикетов
+                for delegate in neededDelegates
+                {
+                    (delegate as! SocketMessageDelegate).gotMessage(dataArray: dataArray as! [Any])
                 }
                 
             }
         }
         
+        func connectToServerWithId(id: Int, completionHandler: (_ userList: [[String: AnyObject]]?) -> Void) {
+            socket.emit("connectUser", id)
+        }
         
         
-        socket.connect()
         
     }
-    
-    
-
 }
 

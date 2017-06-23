@@ -67,9 +67,10 @@ class EntitiesStorage
         
     }
     
-    
-    
-    
+    func Indexof(object: NSObject) -> Int?
+    {
+        return entitiesArray.index(of: object)
+    }
     
     
 }

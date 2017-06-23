@@ -71,10 +71,9 @@ class DialogsCell:UITableViewCell
                     }
                 }
             }
-            
-            
         }
-        get{
+        get
+        {
             return nil
         }
     }

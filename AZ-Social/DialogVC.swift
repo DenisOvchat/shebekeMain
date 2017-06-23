@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class DialogVC:UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UITextViewDelegate
+class DialogVC:UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UITextViewDelegate,SocketMessageDelegate
 {
     
     
@@ -598,7 +598,9 @@ class DialogVC:UIViewController,UITableViewDelegate,UITableViewDataSource,UIColl
     @IBAction func atachmentsPushed(_ sender: Any) {
     }
    
-    @IBOutlet weak var sendMessagePushed: UIButton!
+    func gotMessage(dataArray: [Any]) {
+    }
+    
     
 }
 

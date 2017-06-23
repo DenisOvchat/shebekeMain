@@ -54,7 +54,7 @@ class PhoneCodeInputVC:UIViewController,UITextFieldDelegate
                 rigistrationData["code"] = decimalString
 
                 
-                ServerManager.shared(named: "main")?.POSTJSONRequestByAdding(postfix: "/persons/verification", data: data, complititionHandler: nil)
+                ServerManager.shared(named: "main")?.POSTJSONRequestByAdding(postfix: "/persons/verification", data: data, complititionHandler: nil,withCookies: false,with:"PATCH")
                 field.resignFirstResponder()
                 
             }

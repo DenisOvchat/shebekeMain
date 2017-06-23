@@ -93,7 +93,7 @@ class MailInputVC:UIViewController,UITextFieldDelegate
         let data = ["email":field.text]
         
         
-        ServerManager.shared(named: "main")?.POSTJSONRequestByAdding(postfix: "/persons/verification", data: data, complititionHandler: nil)
+        ServerManager.shared(named: "main")?.POSTJSONRequestByAdding(postfix: "/persons/verification", data: data, complititionHandler: nil,withCookies:false,with: "PUT")
         rigistrationData["email"] = field.text
         (segue.destination as! PhoneCodeInputVC).rigistrationData = rigistrationData
 
